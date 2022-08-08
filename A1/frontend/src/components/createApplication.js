@@ -31,10 +31,10 @@ function CreateApplication() {
     navigate("/createApplication");
   }
 
-  const buttonWrapperStyles = {
-    position: "relative",
-    zIndex: 1,
-  };
+  // const buttonWrapperStyles = {
+  //   position: "relative",
+  //   zIndex: 1,
+  // };
 
   // const otherContentStyles = {
   //   position: "relative",
@@ -74,16 +74,14 @@ function CreateApplication() {
         <div className="barbar">
           <h1>Application</h1>
           <h3>Welcome {getinfo}! </h3>
-          <div style={buttonWrapperStyles}>
-            <button
-              className="editbtn editbtn2"
-              type="Submit"
-              onClick={() => setIsOpen(true)}
-            >
-              Create New Application
-            </button>
-            <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal>
-          </div>
+          <button
+            className="editbtn editbtn2"
+            type="Submit"
+            onClick={() => setIsOpen(true)}
+          >
+            Create New Application
+          </button>
+          <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal>
           <br />
           <br />
           <table>

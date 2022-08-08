@@ -40,7 +40,7 @@ function Modal({ open, children, onClose }) {
             <button onClick={onClose} id="cancelBtn">
               Cancel
             </button>
-            <button>Continue</button>
+            <button>Create</button>
           </div>
         </div>
         {children}
