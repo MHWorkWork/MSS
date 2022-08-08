@@ -12,6 +12,7 @@ import GroupHome from "./components/groupHome";
 import AdminProfile from "./components/adminProfile";
 import UpdateStatus from "./components/updateStatus";
 import EditProfile from "./components/editProfile";
+import CreateApplication from "./components/createApplication";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 //main
@@ -33,6 +34,7 @@ function App() {
           <Route path="/adminProfile" element={<AdminProfile />} />
           <Route path="/updateGroupStatus" element={<UpdateStatus />} />
           <Route path="/editProfile" element={<EditProfile />} />
+          <Route path="/createApplication" element={<CreateApplication />} />
         </Routes>
       </BrowserRouter>
     </div>

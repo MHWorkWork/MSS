@@ -1,4 +1,4 @@
-//link front end to backend
+//link to frontend
 import axios from "axios";
 const API_URL = "http://localhost:8080/";
 
@@ -69,6 +69,21 @@ class Service {
 
   createGroup(groupName) {
     return axios.post(API_URL + "createGroup", groupName).then((res) => {
+      return res.data;
+    });
+  }
+
+  /*Assignemt 2*/
+  createApplication(application) {
+    return axios
+      .post(API_URL + "createApplication", application)
+      .then((res) => {
+        return res.data;
+      });
+  }
+
+  getallApplication() {
+    return axios.get(API_URL + "getallApplication").then((res) => {
       return res.data;
     });
   }

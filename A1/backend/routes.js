@@ -31,6 +31,10 @@ app.post("/createGroup", query.createGroup);
 app.get("/findAllGroup", query.findAllGroup);
 app.post("/editProfile", query.EditUserProfile);
 
+/*Assignment 2*/
+app.post("/createApplication", query.createApplication);
+app.get("/getallApplication", query.getallApplication);
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 

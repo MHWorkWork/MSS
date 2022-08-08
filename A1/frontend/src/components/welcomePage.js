@@ -31,6 +31,9 @@ function WelcomePage() {
         <li>
           <a href="/adminProfile">View Profile</a>
         </li>
+        <li>
+          <a href="/createApplication">Application</a>
+        </li>
         <li className="logout">
           <button className="editbtn editbtn3" type="Submit" onClick={logout}>
             Logout
