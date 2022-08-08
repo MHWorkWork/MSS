@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import userService from "../services/service";
 import { useNavigate } from "react-router-dom";
+import Modal from "./Modal";
 
 function CreateApplication() {
   const [appList, setAppList] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const getinfo = localStorage.getItem("username");
@@ -28,6 +30,16 @@ function CreateApplication() {
     // localStorage.setItem("edituser", user);
     navigate("/createApplication");
   }
+
+  const buttonWrapperStyles = {
+    position: "relative",
+    zIndex: 1,
+  };
+
+  // const otherContentStyles = {
+  //   position: "relative",
+  //   zIndex: 2,
+  // };
 
   return (
     <>
@@ -62,14 +74,16 @@ function CreateApplication() {
         <div className="barbar">
           <h1>Application</h1>
           <h3>Welcome {getinfo}! </h3>
-          <button
-            className="editbtn editbtn2"
-            type="Submit"
-            onClick={handleSubmit}
-          >
-            Create New Application
-          </button>
-
+          <div style={buttonWrapperStyles}>
+            <button
+              className="editbtn editbtn2"
+              type="Submit"
+              onClick={() => setIsOpen(true)}
+            >
+              Create New Application
+            </button>
+            <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal>
+          </div>
           <br />
           <br />
           <table>
