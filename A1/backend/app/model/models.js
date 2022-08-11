@@ -199,7 +199,7 @@ exports.createGroup = (req, response) => {
 /* Assignment 2*/
 exports.createApplication = (req, response) => {
   sql.query(
-    `insert into application (app_acronym, app_description, app_rnumber, app_startDate, app_endDate, app_permit_Open, app_permit_todolist, app_permit_doing, app_permit_done) 
+    `insert into application (app_acronym,app_description,app_rnumber,app_startDate,app_endDate,app_permit_Open,app_permit_todolist,app_permit_doing,app_permit_done) 
     values ('${req.body.app_acronym}', '${req.body.app_description}', '${req.body.app_rnumber}', '${req.body.app_startDate}', '${req.body.app_endDate}', '${req.body.app_permit_Open}', '${req.body.app_permit_todolist}', '${req.body.app_permit_doing}', '${req.body.app_permit_done}')`,
     (err, res) => {
       if (err) {

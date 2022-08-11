@@ -12,11 +12,12 @@
   width: 500px;
   height: 500px;
   border-radius: 12px;
-  background-color: white;
+  background-color: #abb6d2;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   display: flex;
   flex-direction: column;
   padding: 25px;
+  overflow-y: scroll;
 }
 
 .modalContainer .title {
@@ -67,4 +68,17 @@
 
 #cancelBtn {
   background-color: crimson;
+}
+
+.textarea {
+  max-height: 200px;
+  max-width: 500px;
+}
+
+.datepicker {
+  z-index: 2051 !important;
+}
+
+.textcolor {
+  background-color: #fff;
 }

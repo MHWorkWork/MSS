@@ -123,6 +123,19 @@ function CreateApplication() {
               );
             })}
           </table>
+
+          {appList.map((app, index) => {
+            return (
+              <button
+                className="moveapps"
+                onClick={() => {
+                  handleSubmit2(app.app_acronym);
+                }}
+              >
+                {app.app_acronym}
+              </button>
+            );
+          })}
         </div>
       </div>
     </>
