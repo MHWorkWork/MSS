@@ -12,6 +12,7 @@ function GroupHome() {
   //component needs to do something after render
   useEffect(() => {
     userService.findAllGroup().then((res) => {
+      console.log(res);
       setGroupList(res.result);
     });
   }, []);

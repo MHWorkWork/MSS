@@ -296,3 +296,19 @@ li a:hover:not(.active) {
   margin: 4px 2px;
   cursor: pointer;
 }
+
+.appheader {
+  text-align: center;
+}
+
+.textplacement {
+  text-align: left;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 20px;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  padding: 30px;
+}

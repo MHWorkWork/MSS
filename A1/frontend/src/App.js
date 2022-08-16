@@ -13,6 +13,7 @@ import AdminProfile from "./components/adminProfile";
 import UpdateStatus from "./components/updateStatus";
 import EditProfile from "./components/editProfile";
 import CreateApplication from "./components/createApplication";
+import KanbanBoard from "./components/kanbanBoard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 //main
@@ -35,6 +36,7 @@ function App() {
           <Route path="/updateGroupStatus" element={<UpdateStatus />} />
           <Route path="/editProfile" element={<EditProfile />} />
           <Route path="/createApplication" element={<CreateApplication />} />
+          <Route path="/kanbanBoard" element={<KanbanBoard />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -211,6 +211,37 @@ exports.createApplication = (req, response) => {
   );
 };
 
+exports.createPlan = (req, response) => {
+  sql.query(
+    `insert into plan (plan_mvp_name, plan_startDate, plan_endDate, plan_app_acronym) 
+    values ('${req.body.plan_mvp_name}', '${req.body.plan_startDate}', '${req.body.plan_endDate}', '${req.body.plan_app_acronym}')`,
+    (err, res) => {
+      if (err) {
+        response.send({ result: false, message: err.message });
+      } else {
+        response.send({ result: true });
+      }
+    }
+  );
+};
+
+exports.createTask = (req, response) => {
+  sql.query(
+    `insert into task (task_name, task_description, task_notes, task_id, task_plan, task_app_acronym, 
+      task_state, task_creator, task_owner, task_createdate) 
+    values ('${req.body.task_name}', '${req.body.task_description}', '${req.body.task_notes}', 
+    '${req.body.task_id}' , '${req.body.task_plan}' , '${req.body.task_app_acronym}' , 'Open' , 
+    '${req.body.task_creator}' , '${req.body.task_owner}' , '${req.body.task_createdate}')`,
+    (err, res) => {
+      if (err) {
+        response.send({ result: false, message: err.message });
+      } else {
+        response.send({ result: true });
+      }
+    }
+  );
+};
+
 exports.getallApplication = (req, response) => {
   sql.query(`SELECT * FROM application`, (err, res) => {
     if (err) {
@@ -219,4 +250,46 @@ exports.getallApplication = (req, response) => {
       response.send({ result: res });
     }
   });
+};
+
+exports.getallPlans = (req, response) => {
+  console.log(req.body);
+  sql.query(
+    `SELECT * FROM plan where plan_app_acronym = '${req.body.plan_app_acronym}'`,
+    (err, res) => {
+      if (err) {
+        response.send(err);
+      } else {
+        response.send({ result: res });
+      }
+    }
+  );
+};
+
+exports.retrieveTaskByApplication = (req, response) => {
+  console.log(req.body);
+  sql.query(
+    `SELECT * FROM task where task_app_acronym = '${req.body.task_app_acronym}'`,
+    (err, res) => {
+      if (err) {
+        response.send(err);
+      } else {
+        response.send({ result: res });
+      }
+    }
+  );
+};
+
+exports.getallTasks = (req, response) => {
+  console.log(req.body);
+  sql.query(
+    `SELECT * FROM task where task_app_acronym = '${req.body.task_app_acronym}'`,
+    (err, res) => {
+      if (err) {
+        response.send(err);
+      } else {
+        response.send({ result: res });
+      }
+    }
+  );
 };

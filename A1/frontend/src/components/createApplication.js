@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import userService from "../services/service";
 import { useNavigate } from "react-router-dom";
-import Modal from "./Modal";
+import AppModal from "./appModal";
 
 function CreateApplication() {
   const [appList, setAppList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [startdate, setStartDate] = useState(null);
   const navigate = useNavigate();
 
   const getinfo = localStorage.getItem("username");
@@ -22,13 +23,17 @@ function CreateApplication() {
     navigate("/");
   };
 
+  const handleDateChange = (newVal) => {
+    return JSON.stringify(newVal).split("T")[0].slice(1);
+  };
+
   const handleSubmit = (event) => {
     navigate("/createApplication");
   };
 
   function handleSubmit2(app) {
-    // localStorage.setItem("edituser", user);
-    navigate("/createApplication");
+    localStorage.setItem("appname", app);
+    navigate("/kanbanBoard");
   }
 
   // const buttonWrapperStyles = {
@@ -81,7 +86,7 @@ function CreateApplication() {
           >
             Create New Application
           </button>
-          <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal>
+          <AppModal open={isOpen} onClose={() => setIsOpen(false)}></AppModal>
           <br />
           <br />
           <table>
@@ -102,8 +107,8 @@ function CreateApplication() {
                   <td>{app.app_acronym}</td>
                   <td>{app.app_description}</td>
                   <td>{app.app_rnumber}</td>
-                  <td>{app.app_startDate}</td>
-                  <td>{app.app_endDate}</td>
+                  <td>{handleDateChange(app.app_startDate)}</td>
+                  <td>{handleDateChange(app.app_endDate)}</td>
                   <td>{app.app_permit_Open}</td>
                   <td>{app.app_permit_todolist}</td>
                   <td>{app.app_permit_doing}</td>

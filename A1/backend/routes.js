@@ -33,7 +33,12 @@ app.post("/editProfile", query.EditUserProfile);
 
 /*Assignment 2*/
 app.post("/createApplication", query.createApplication);
+app.post("/createPlan", query.createPlan);
+app.post("/createTask", query.createTask);
 app.get("/getallApplication", query.getallApplication);
+app.post("/retrieveTaskByApplication", query.retrieveTaskByApplication);
+app.post("/getallPlans", query.getallPlans);
+app.post("/getallTasks", query.getallTasks);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

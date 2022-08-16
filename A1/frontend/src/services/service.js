@@ -82,10 +82,43 @@ class Service {
       });
   }
 
+  createPlan(plan) {
+    return axios.post(API_URL + "createPlan", plan).then((res) => {
+      return res.data;
+    });
+  }
+
+  createTask(task) {
+    return axios.post(API_URL + "createTask", task).then((res) => {
+      return res.data;
+    });
+  }
+
   getallApplication() {
     return axios.get(API_URL + "getallApplication").then((res) => {
       return res.data;
     });
   }
+
+  getallPlans(getappname) {
+    return axios.post(API_URL + "getallPlans", getappname).then((res) => {
+      return res.data;
+    });
+  }
+
+  getallTasks(getappname) {
+    return axios.post(API_URL + "getallTasks", getappname).then((res) => {
+      return res.data;
+    });
+  }
+
+  retrieveTaskByApplication(planname) {
+    return axios
+      .post(API_URL + "retrieveTaskByApplication", planname)
+      .then((res) => {
+        return res.data;
+      });
+  }
 }
+
 export default new Service();

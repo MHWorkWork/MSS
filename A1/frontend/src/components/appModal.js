@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Select from "react-select";
 import "./Modal.css";
 import userService from "../services/service";
 import { toast, ToastContainer } from "react-toastify";
@@ -7,7 +8,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-function Modal({ open, children, onClose }) {
+function AppModal({ open, onClose }) {
   const [appname, setAppname] = useState("");
   const [description, setDescription] = useState("");
   const [runningno, setRunningno] = useState("");
@@ -17,6 +18,8 @@ function Modal({ open, children, onClose }) {
   const [permitdolist, setPermitDoList] = useState([]);
   const [permitdoing, setPermitDoing] = useState([]);
   const [permitdone, setPermitDone] = useState([]);
+  const [groupName, setGroup] = useState([]);
+  const [groupList, setGroupList] = useState([]);
 
   const handleStartDateChange = (newVal) => {
     setStartDate(JSON.stringify(newVal).split("T")[0].slice(1));
@@ -32,7 +35,7 @@ function Modal({ open, children, onClose }) {
     const app = {
       app_acronym: appname,
       app_description: description,
-      app_rnumber: runningno,
+      app_rnumber: 1,
       app_startDate: startdate,
       app_endDate: enddate,
       app_permit_Open: permitopen,
@@ -49,6 +52,54 @@ function Modal({ open, children, onClose }) {
       }
       console.log(res);
     });
+  };
+
+  useEffect(() => {
+    userService.findAllGroup().then((res) => {
+      const options = res.result.map((val, index) => {
+        return {
+          value: val.groupName,
+          label: val.groupName,
+        };
+      });
+      setGroupList(options);
+    });
+  }, []);
+
+  const handleChange = (e) => {
+    let temp = [];
+
+    temp.push(e.value);
+
+    console.log(temp);
+    setPermitOpen(temp);
+  };
+
+  const handleChange2 = (e) => {
+    let temp = [];
+
+    temp.push(e.value);
+
+    console.log(temp);
+    setPermitDoList(temp);
+  };
+
+  const handleChange3 = (e) => {
+    let temp = [];
+
+    temp.push(e.value);
+
+    console.log(temp);
+    setPermitDoing(temp);
+  };
+
+  const handleChange4 = (e) => {
+    let temp = [];
+
+    temp.push(e.value);
+
+    console.log(temp);
+    setPermitDone(temp);
   };
 
   const modalStyles = {
@@ -79,6 +130,7 @@ function Modal({ open, children, onClose }) {
           <div className="titleCloseBtn">
             <button onClick={onClose}>X</button>
           </div>
+
           <div className="title">
             <h2>Create new App</h2>
           </div>
@@ -99,7 +151,7 @@ function Modal({ open, children, onClose }) {
               onChange={(e) => setAppname(e.target.value)}
               placeholder="Name"
               type="text"
-              required="required"
+              required
             />
           </div>
 
@@ -115,38 +167,30 @@ function Modal({ open, children, onClose }) {
             ></textarea>
           </div>
 
-          <div class="flex-row">
+          {/* <div class="flex-row">
             <input
-              id="appno"
               class="lf--input"
               value={runningno}
               onChange={(e) => setRunningno(e.target.value)}
-              placeholder="Running No."
-              type="number"
+              placeholder="Running No"
+              type="text"
               required="required"
             />
-          </div>
+          </div> */}
+
+          {/* <label className="textplacement">Running No:{rNo}</label> */}
+
           {/* <div className="datepicker">
-            <label className="textsize" for="startdate">
-              Start Date:
-            </label>
             <input
               type="date"
-              id="datepicker"
               value={startdate}
               onChange={(e) => setStartDate(e.target.value)}
-              name="startdate"
             />
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <label className="textsize" for="enddate">
-              End Date:
-            </label>
             <input
               type="date"
-              id="datepicker"
               value={enddate}
               onChange={(e) => setEndDate(e.target.value)}
-              name="enddate"
             />
           </div> */}
 
@@ -154,7 +198,7 @@ function Modal({ open, children, onClose }) {
             <DatePicker
               label="Start Date"
               value={startdate}
-              inputFormat="dd-mm-yyyy"
+              inputFormat="dd-MM-yyyy"
               onChange={handleStartDateChange}
               renderInput={(params) => (
                 <TextField
@@ -168,7 +212,7 @@ function Modal({ open, children, onClose }) {
             <DatePicker
               label="End Date"
               value={enddate}
-              inputFormat="dd-mm-yyyy"
+              inputFormat="dd-MM-yyyy"
               onChange={handleEndDateChange}
               renderInput={(params) => (
                 <TextField
@@ -180,7 +224,7 @@ function Modal({ open, children, onClose }) {
           </LocalizationProvider>
 
           <br />
-          <select
+          {/* <select
             class="space"
             value={permitopen}
             onChange={(e) => setPermitOpen(e.target.value)}
@@ -192,49 +236,58 @@ function Modal({ open, children, onClose }) {
             <option value="Project Manager">Project Manager</option>
             <option value="Project Lead">Project Lead</option>
             <option value="Team Member">Team Member</option>
-          </select>
+          </select> */}
+          <Select
+            className="textsize"
+            //isMulti
+            //options={groupName}
+
+            //value={permitopen}
+            //onChange={(e) => setPermitOpen(e.target.value)}
+            placeholder="Permit Open"
+            onChange={handleChange}
+            options={groupList}
+            value={groupList.find((obj) => obj.value === groupName)}
+          />
           <br />
-          <select
-            class="space"
-            value={permitdolist}
-            onChange={(e) => setPermitDoList(e.target.value)}
-            required
-          >
-            <option option value="" disabled selected>
-              Permit Do List
-            </option>
-            <option value="Project Manager">Project Manager</option>
-            <option value="Project Lead">Project Lead</option>
-            <option value="Team Member">Team Member</option>
-          </select>
+          <Select
+            className="textsize"
+            //isMulti
+            //options={groupName}
+
+            //value={permitopen}
+            //onChange={(e) => setPermitOpen(e.target.value)}
+            placeholder="Permit To Do"
+            onChange={handleChange2}
+            options={groupList}
+            value={groupList.find((obj) => obj.value === groupName)}
+          />
           <br />
-          <select
-            class="space"
-            value={permitdoing}
-            onChange={(e) => setPermitDoing(e.target.value)}
-            required
-          >
-            <option option value="" disabled selected>
-              Permit Doing
-            </option>
-            <option value="Project Manager">Project Manager</option>
-            <option value="Project Lead">Project Lead</option>
-            <option value="Team Member">Team Member</option>
-          </select>
+          <Select
+            className="textsize"
+            //isMulti
+            //options={groupName}
+
+            //value={permitopen}
+            //onChange={(e) => setPermitOpen(e.target.value)}
+            placeholder="Permit Doing"
+            onChange={handleChange3}
+            options={groupList}
+            value={groupList.find((obj) => obj.value === groupName)}
+          />
           <br />
-          <select
-            class="space"
-            value={permitdone}
-            onChange={(e) => setPermitDone(e.target.value)}
-            required
-          >
-            <option option value="" disabled selected>
-              Permit Done
-            </option>
-            <option value="Project Manager">Project Manager</option>
-            <option value="Project Lead">Project Lead</option>
-            <option value="Team Member">Team Member</option>
-          </select>
+          <Select
+            className="textsize"
+            //isMulti
+            //options={groupName}
+
+            //value={permitopen}
+            //onChange={(e) => setPermitOpen(e.target.value)}
+            placeholder="Permit Done"
+            onChange={handleChange4}
+            options={groupList}
+            value={groupList.find((obj) => obj.value === groupName)}
+          />
           <br />
           <div className="footer">
             <button onClick={onClose} id="cancelBtn">
@@ -244,7 +297,6 @@ function Modal({ open, children, onClose }) {
           </div>
         </div>
 
-        {children}
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -259,4 +311,4 @@ function Modal({ open, children, onClose }) {
   );
 }
 
-export default Modal;
+export default AppModal;
