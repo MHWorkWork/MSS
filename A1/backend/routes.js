@@ -38,6 +38,7 @@ app.post("/createTask", query.createTask);
 app.get("/getallApplication", query.getallApplication);
 app.post("/retrieveTaskByApplication", query.retrieveTaskByApplication);
 app.post("/getallPlans", query.getallPlans);
+app.post("/getOneApplication", query.getOneApplication);
 app.post("/getallTasks", query.getallTasks);
 
 // set port, listen for requests

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PlanModal from "./planModal";
 import TaskModal from "./taskModal";
+import CardModal from "./cardModal";
 import userService from "../services/service";
 import useCollapse from "react-collapsed";
 import { styled } from "@mui/material/styles";
@@ -16,6 +17,7 @@ import Typography from "@mui/material/Typography";
 function KanbanBoard() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
+  const [isOpen3, setIsOpen3] = useState(false);
   const [planList, setPlanList] = useState([]);
   const [taskList, setTaskList] = useState([]);
   const getappname = localStorage.getItem("appname");
@@ -37,6 +39,12 @@ function KanbanBoard() {
     </Box>
   );
 
+  function handleSubmit(name) {
+    setIsOpen3(true);
+    localStorage.setItem("viewTask", name);
+    // console.log(a);
+  }
+
   const handleDateChange = (newVal) => {
     return JSON.stringify(newVal).split("T")[0].slice(1);
   };
@@ -47,13 +55,19 @@ function KanbanBoard() {
     window.history.back();
   };
 
+  // useEffect(() => {
+  //   userService
+  //     .getallPlans({ plan_app_acronym: localStorage.getItem("appname") })
+  //     .then((res) => {
+  //       setPlanList(res.result);
+  //     });
+
   useEffect(() => {
     userService
       .getallPlans({ plan_app_acronym: localStorage.getItem("appname") })
       .then((res) => {
         setPlanList(res.result);
       });
-
     userService
       .getallTasks({ task_app_acronym: localStorage.getItem("appname") })
       .then((res) => {
@@ -68,7 +82,7 @@ function KanbanBoard() {
           <Typography variant="h5" component="div">
             {task.task_name}
           </Typography>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
             {task.task_description}
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -77,11 +91,27 @@ function KanbanBoard() {
           <Typography variant="body2">
             {task.task_owner}
             <br />
+            {task.task_plan}
+            <br />
             {handleDateChange(task.task_createdate)}
-          </Typography>
+          </Typography> */}
         </CardContent>
         <CardActions>
-          <Button size="small">Learn More</Button>
+          <button
+            className="editbtn editbtn1"
+            onClick={() => {
+              handleSubmit(task.task_name);
+            }}
+          >
+            {" "}
+            View
+          </button>
+          {/* <Button onClick={handleSubmit(task.task_name)}>View</Button> */}
+          <button className="editbtn editbtn3">Edit</button>
+          <CardModal
+            open={isOpen3}
+            onClose={() => setIsOpen3(false)}
+          ></CardModal>
         </CardActions>
       </Card>
     );
@@ -94,7 +124,7 @@ function KanbanBoard() {
           <Typography variant="h5" component="div">
             {plan.plan_mvp_name}
           </Typography>
-          <button {...getToggleProps()}>
+          {/* <button {...getToggleProps()}>
             {isExpanded ? "Collapse" : "Expand"}
           </button>
           <section {...getCollapseProps()}>
@@ -105,20 +135,17 @@ function KanbanBoard() {
             <br />
             {plan.plan_app_acronym}
             <br />
-          </section>
-          {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            {plan.plan_startDate}
+          </section> */}
+          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            {handleDateChange(plan.plan_startDate)}
             <br />
-            {plan.plan_endDate}
+            {handleDateChange(plan.plan_endDate)}
           </Typography>
-          <Typography variant="body2">
+          {/* <Typography variant="body2">
             <br />
             {plan.plan_app_acronym}
           </Typography> */}
         </CardContent>
-        <CardActions>
-          <Button size="small">Learn More</Button>
-        </CardActions>
       </Card>
     );
   }

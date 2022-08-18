@@ -106,15 +106,21 @@ class Service {
     });
   }
 
+  getOneApplication(getoneapp) {
+    return axios.post(API_URL + "getOneApplication", getoneapp).then((res) => {
+      return res.data;
+    });
+  }
+
   getallTasks(getappname) {
     return axios.post(API_URL + "getallTasks", getappname).then((res) => {
       return res.data;
     });
   }
 
-  retrieveTaskByApplication(planname) {
+  retrieveTaskByApplication(taskname) {
     return axios
-      .post(API_URL + "retrieveTaskByApplication", planname)
+      .post(API_URL + "retrieveTaskByApplication", taskname)
       .then((res) => {
         return res.data;
       });

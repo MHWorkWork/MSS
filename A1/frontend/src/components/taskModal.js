@@ -22,18 +22,35 @@ function TaskModal({ open, onClose }) {
   const getuser = localStorage.getItem("username");
   const getappname = localStorage.getItem("appname");
   const createdate = moment(new Date()).format("YYYY/MM/DD");
+  const taskRNo = getappname + "_" + task_id;
+  //console.log(task_id);
+
+  const reloadPage = () => {
+    window.location.reload(true);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const converttoString = JSON.stringify(task_plan.value);
+    //const finalString = converttoString.replace(/['‘’"“”]/g, "");
+
+    const appNo = {
+      app_acronym: getappname,
+    };
+
+    userService.getOneApplication(appNo).then((res) => {
+      setTaskID(res.result[0].app_rnumber);
+
+      console.log(res.result[0].app_rnumber);
+    });
 
     const app = {
       task_name: task_name,
       task_description: task_description,
       task_notes: task_notes,
-      task_id: task_id,
-      task_plan: converttoString.replace(/['‘’"“”]/g, ""),
+      task_id: taskRNo,
+      task_plan: converttoString,
       task_app_acronym: getappname,
       task_state: task_state,
       task_creator: getuser,
@@ -89,7 +106,7 @@ function TaskModal({ open, onClose }) {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, .7)",
+    backgroundColor: "rgba(0, 0, 0, .5)",
     zIndex: 1000,
   };
 
@@ -101,7 +118,7 @@ function TaskModal({ open, onClose }) {
       <div style={modalStyles}>
         <div className="modalContainer">
           <div className="titleCloseBtn">
-            <button onClick={onClose}>X</button>
+            <button onClick={reloadPage}>X</button>
           </div>
 
           <div className="title">
@@ -116,7 +133,7 @@ function TaskModal({ open, onClose }) {
               onChange={(e) => setTaskName(e.target.value)}
               placeholder="Task Name"
               type="text"
-              required="required"
+              required
             />
           </div>
 
@@ -159,7 +176,7 @@ function TaskModal({ open, onClose }) {
             options={states}
           ></Select>
           <br /> */}
-          <label className="textplacement">Task ID:</label>
+          <label className="textplacement">Task ID: {taskRNo} </label>
 
           <label className="textplacement">Task Owner: {getuser}</label>
 
@@ -170,7 +187,7 @@ function TaskModal({ open, onClose }) {
           <br />
 
           <div className="footer">
-            <button onClick={onClose} id="cancelBtn">
+            <button onClick={reloadPage} id="cancelBtn">
               Cancel
             </button>
             <button onClick={handleSubmit}>Create</button>

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import "./Modal.css";
+import * as moment from "moment";
 import userService from "../services/service";
 import { toast, ToastContainer } from "react-toastify";
 import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+const createdate = moment(new Date()).format("YYYY-MM-DD");
 
 function AppModal({ open, onClose }) {
   const [appname, setAppname] = useState("");
@@ -46,11 +48,11 @@ function AppModal({ open, onClose }) {
 
     userService.createApplication(app).then((res) => {
       if (res.result == true) {
-        toast.success("App created!", {});
+        toast.success("App created!");
+        window.location.reload(true);
       } else {
-        toast.error("App Exists!", {});
+        toast.error("App Exists!");
       }
-      console.log(res);
     });
   };
 
@@ -151,7 +153,7 @@ function AppModal({ open, onClose }) {
               onChange={(e) => setAppname(e.target.value)}
               placeholder="Name"
               type="text"
-              required
+              required="required"
             />
           </div>
 
@@ -195,10 +197,12 @@ function AppModal({ open, onClose }) {
           </div> */}
 
           <LocalizationProvider dateAdapter={AdapterDateFns}>
+            Start Date:
             <DatePicker
               label="Start Date"
               value={startdate}
               inputFormat="dd-MM-yyyy"
+              required
               onChange={handleStartDateChange}
               renderInput={(params) => (
                 <TextField
@@ -207,7 +211,6 @@ function AppModal({ open, onClose }) {
                 />
               )}
             />
-
             <br />
             <DatePicker
               label="End Date"

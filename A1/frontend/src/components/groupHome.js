@@ -19,7 +19,7 @@ function GroupHome() {
 
   const logout = () => {
     localStorage.removeItem("username");
-    localStorage.removeItem("edituser");
+    localStorage.removeItem("");
     navigate("/");
   };
 

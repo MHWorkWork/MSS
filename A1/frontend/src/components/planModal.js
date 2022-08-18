@@ -9,6 +9,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 function PlanModal({ open, onClose }) {
   const [plan_mvp_name, setPlanMvpName] = useState("");
+  const [planList, setPlanList] = useState([]);
   const [plan_startdate, setPlanStartDate] = useState(null);
   const [plan_enddate, setPlanEndDate] = useState(null);
   // const [plan_app_acronym, setPlanAppAcronym] = useState("");
@@ -23,6 +24,20 @@ function PlanModal({ open, onClose }) {
   const handleEndDateChange = (newVal) => {
     setPlanEndDate(JSON.stringify(newVal).split("T")[0].slice(1));
   };
+
+  const reloadPage = () => {
+    window.location.reload(true);
+  };
+
+  // useEffect(() => {
+  //   //edit here
+  //   userService
+  //     .getallPlans({ plan_mvp_name: localStorage.getItem("planname") })
+  //     .then((res) => {
+  //       console.log(res);
+  //       setPlanList(res.result);
+  //     });
+  // }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -40,7 +55,6 @@ function PlanModal({ open, onClose }) {
       } else {
         toast.error("Plan Exists!", {});
       }
-      console.log(res);
     });
   };
 
@@ -59,7 +73,7 @@ function PlanModal({ open, onClose }) {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, .7)",
+    backgroundColor: "rgba(0, 0, 0, .5)",
     zIndex: 1000,
   };
 
@@ -70,7 +84,7 @@ function PlanModal({ open, onClose }) {
       <div style={modalStyles}>
         <div className="modalContainer">
           <div className="titleCloseBtn">
-            <button onClick={onClose}>X</button>
+            <button onClick={reloadPage}>X</button>
           </div>
 
           <div className="title">
@@ -141,7 +155,7 @@ function PlanModal({ open, onClose }) {
           <br />
 
           <div className="footer">
-            <button onClick={onClose} id="cancelBtn">
+            <button onClick={reloadPage} id="cancelBtn">
               Cancel
             </button>
             <button onClick={handleSubmit}>Create</button>

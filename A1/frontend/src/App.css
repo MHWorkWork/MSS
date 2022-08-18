@@ -312,3 +312,7 @@ li a:hover:not(.active) {
   text-align: center;
   padding: 30px;
 }
+
+.cardColor {
+  background-color: #abb6d2;
+}
