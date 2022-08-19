@@ -13,6 +13,8 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 
 function KanbanBoard() {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,7 +44,6 @@ function KanbanBoard() {
   function handleSubmit(name) {
     setIsOpen3(true);
     localStorage.setItem("viewTask", name);
-    // console.log(a);
   }
 
   const handleDateChange = (newVal) => {
@@ -54,13 +55,6 @@ function KanbanBoard() {
   const back = () => {
     window.history.back();
   };
-
-  // useEffect(() => {
-  //   userService
-  //     .getallPlans({ plan_app_acronym: localStorage.getItem("appname") })
-  //     .then((res) => {
-  //       setPlanList(res.result);
-  //     });
 
   useEffect(() => {
     userService
@@ -77,7 +71,7 @@ function KanbanBoard() {
 
   function taskCards(task) {
     return (
-      <Card sx={{ minWidth: 100 }}>
+      <Card className="plan" sx={{ minWidth: 100, backgroundColor: "#abb6d2" }}>
         <CardContent>
           <Typography variant="h5" component="div">
             {task.task_name}
@@ -96,7 +90,14 @@ function KanbanBoard() {
             {handleDateChange(task.task_createdate)}
           </Typography> */}
         </CardContent>
-        <CardActions>
+        <ArrowCircleLeftIcon
+          style={{ position: "relative", right: "80px" }}
+        ></ArrowCircleLeftIcon>
+        <ArrowCircleRightIcon
+          style={{ position: "relative", left: "80px" }}
+        ></ArrowCircleRightIcon>
+
+        <CardActions style={{ position: "relative", left: "50px" }}>
           <button
             className="editbtn editbtn1"
             onClick={() => {
@@ -119,8 +120,8 @@ function KanbanBoard() {
 
   function planCards(plan) {
     return (
-      <Card sx={{ minWidth: 100 }}>
-        <CardContent>
+      <Card sx={{ minWidth: 100, backgroundColor: "#abb6d2" }}>
+        <CardContent className="plan">
           <Typography variant="h5" component="div">
             {plan.plan_mvp_name}
           </Typography>
@@ -181,7 +182,12 @@ function KanbanBoard() {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs md={1.4}>
-            <Item>
+            <Item
+              sx={{
+                fontSize: 20,
+                backgroundColor: "#abb6d2",
+              }}
+            >
               Plan
               {planList.map((plan) => {
                 return planCards(plan);
@@ -189,7 +195,7 @@ function KanbanBoard() {
             </Item>
           </Grid>
           <Grid item xs md={2}>
-            <Item>
+            <Item sx={{ fontSize: 20, backgroundColor: "#abb6d2" }}>
               Open
               {taskList.map((task, index) => {
                 return taskCards(task);
@@ -218,17 +224,17 @@ function KanbanBoard() {
             </Item>
           </Grid>
           <Grid item xs md={2}>
-            <Item>To-do-list</Item>
+            <Item sx={{ fontSize: 20 }}>To-do-list</Item>
           </Grid>
 
           <Grid item xs md={2}>
-            <Item>Doing</Item>
+            <Item sx={{ fontSize: 20 }}>Doing</Item>
           </Grid>
           <Grid item xs md={2}>
-            <Item>Done</Item>
+            <Item sx={{ fontSize: 20 }}>Done</Item>
           </Grid>
           <Grid item xs md={2}>
-            <Item>Close</Item>
+            <Item sx={{ fontSize: 20 }}>Close</Item>
           </Grid>
         </Grid>
       </Box>

@@ -226,18 +226,36 @@ exports.createPlan = (req, response) => {
 };
 
 exports.createTask = (req, response) => {
+  console.log(req);
   sql.query(
-    `insert into task (task_name, task_description, task_notes, task_id, task_plan, task_app_acronym, 
+    `SELECT app_rnumber from application where app_acronym='${req.body.task_app_acronym}'`,
+    (err, rnumber, fields) => {
+      console.log(rnumber);
+      sql.query(
+        `SELECT COUNT(*) as count from task where task_app_acronym='${req.body.task_app_acronym}'`,
+        (err, count, fields) => {
+          console.log(count);
+          var id =
+            req.body.task_app_acronym +
+            "_" +
+            (rnumber[0].app_rnumber + count[0].count);
+
+          sql.query(
+            `insert into task (task_name, task_description, task_notes, task_id, task_plan, task_app_acronym, 
       task_state, task_creator, task_owner, task_createdate) 
     values ('${req.body.task_name}', '${req.body.task_description}', '${req.body.task_notes}', 
-    '${req.body.task_id}' , '${req.body.task_plan}' , '${req.body.task_app_acronym}' , 'Open' , 
+    '${id}' , '${req.body.task_plan}' , '${req.body.task_app_acronym}' , 'Open' , 
     '${req.body.task_creator}' , '${req.body.task_owner}' , '${req.body.task_createdate}')`,
-    (err, res) => {
-      if (err) {
-        response.send({ result: false, message: err.message });
-      } else {
-        response.send({ result: true });
-      }
+            (err, res) => {
+              if (err) {
+                response.send({ result: false, message: err.message });
+              } else {
+                response.send({ result: true });
+              }
+            }
+          );
+        }
+      );
     }
   );
 };

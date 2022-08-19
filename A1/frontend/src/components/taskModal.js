@@ -33,24 +33,24 @@ function TaskModal({ open, onClose }) {
     event.preventDefault();
 
     const converttoString = JSON.stringify(task_plan.value);
-    //const finalString = converttoString.replace(/['‘’"“”]/g, "");
+    const finalString = converttoString.replace(/['‘’"“”]/g, "");
 
     const appNo = {
       app_acronym: getappname,
     };
 
-    userService.getOneApplication(appNo).then((res) => {
-      setTaskID(res.result[0].app_rnumber);
+    // userService.getOneApplication(appNo).then((res) => {
+    //   setTaskID(res.result[0].app_rnumber);
 
-      console.log(res.result[0].app_rnumber);
-    });
+    //   console.log(res.result[0].app_rnumber);
+    // });
 
     const app = {
       task_name: task_name,
       task_description: task_description,
       task_notes: task_notes,
-      task_id: taskRNo,
-      task_plan: converttoString,
+      // task_id: taskRNo,
+      task_plan: finalString,
       task_app_acronym: getappname,
       task_state: task_state,
       task_creator: getuser,
@@ -176,7 +176,7 @@ function TaskModal({ open, onClose }) {
             options={states}
           ></Select>
           <br /> */}
-          <label className="textplacement">Task ID: {taskRNo} </label>
+          {/* <label className="textplacement">Task ID: {taskRNo} </label> */}
 
           <label className="textplacement">Task Owner: {getuser}</label>
 

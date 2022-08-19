@@ -37,7 +37,7 @@ function AppModal({ open, onClose }) {
     const app = {
       app_acronym: appname,
       app_description: description,
-      app_rnumber: 1,
+      app_rnumber: "R01",
       app_startDate: startdate,
       app_endDate: enddate,
       app_permit_Open: permitopen,
